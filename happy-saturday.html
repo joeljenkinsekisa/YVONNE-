@@ -171,6 +171,32 @@
   }
   .signature { font-size: 0.95rem; color: #9c5570; font-style: italic; }
 
+  /* Staggered finale reveal */
+  #finale.active .photo-wrap { animation: zoomSpin 1s cubic-bezier(.18,.89,.32,1.28) both, floaty 4s ease-in-out 1s infinite; }
+  #finale.active .name { animation: slideUp .7s ease .35s both; }
+  #finale.active .final-msg { animation: slideUp .7s ease .55s both, glow 2.5s 1.3s infinite alternate ease-in-out; }
+  #finale.active .signature { animation: slideUp .7s ease .8s both; }
+  @keyframes zoomSpin { from { opacity:0; transform: scale(.3) rotate(-25deg); } to { opacity:1; transform: scale(1) rotate(0); } }
+  @keyframes slideUp { from { opacity:0; transform: translateY(22px); } to { opacity:1; transform: translateY(0); } }
+
+  /* Tap burst */
+  .burst {
+    position: fixed; pointer-events: none; z-index: 4;
+    font-size: 1.2rem; animation: burst .7s ease-out forwards;
+  }
+  @keyframes burst {
+    0% { opacity: 1; transform: translate(-50%,-50%) scale(.4); }
+    100% { opacity: 0; transform: translate(var(--bx), var(--by)) scale(1.4); }
+  }
+
+  /* Twinkling sparkles layer */
+  .twinkle {
+    position: fixed; z-index: 0; pointer-events: none;
+    font-size: .8rem; opacity: 0;
+    animation: tw 3s ease-in-out infinite;
+  }
+  @keyframes tw { 0%,100%{opacity:0; transform:scale(.5)} 50%{opacity:.9; transform:scale(1)} }
+
   .floating {
     position: fixed; bottom: -40px; font-size: 1.6rem;
     pointer-events: none; z-index: 1;
@@ -437,10 +463,11 @@
     const y = Math.random() * 75 + 5;
     h.style.left = x + '%';
     h.style.top = y + '%';
-    h.addEventListener('click', () => {
+    h.addEventListener('click', (e) => {
       if (!running) return;
       score++;
       scoreEl.textContent = `💖 ${score} / ${GOAL}`;
+      burstAt(e.clientX, e.clientY);
       h.remove();
       spawnHeart();
       if (score >= GOAL) endGame(true);
@@ -493,6 +520,37 @@
     }
   }
   setInterval(spawnHeart, 1500);
+
+  // Tap burst: little hearts flying out from a point
+  function burstAt(x, y) {
+    const parts = ['💖','✨','💕','🩷','💗'];
+    for (let i = 0; i < 8; i++) {
+      const b = document.createElement('div');
+      b.className = 'burst';
+      b.textContent = parts[Math.floor(Math.random()*parts.length)];
+      b.style.left = x + 'px';
+      b.style.top = y + 'px';
+      const ang = (Math.PI * 2 * i) / 8;
+      const dist = 40 + Math.random() * 30;
+      b.style.setProperty('--bx', `calc(-50% + ${Math.cos(ang)*dist}px)`);
+      b.style.setProperty('--by', `calc(-50% + ${Math.sin(ang)*dist}px)`);
+      document.body.appendChild(b);
+      setTimeout(() => b.remove(), 700);
+    }
+  }
+
+  // Twinkling sparkles scattered in the background
+  function twinkle() {
+    const t = document.createElement('div');
+    t.className = 'twinkle';
+    t.textContent = Math.random() > 0.5 ? '✨' : '⭐';
+    t.style.left = Math.random()*100 + 'vw';
+    t.style.top = Math.random()*100 + 'vh';
+    t.style.fontSize = (0.6 + Math.random()*1.2) + 'rem';
+    document.body.appendChild(t);
+    setTimeout(() => t.remove(), 3000);
+  }
+  setInterval(twinkle, 500);
 
   const musicBtn = document.getElementById('musicBtn');
   let audioCtx=null, timer=null, playing=false, mi=0;
