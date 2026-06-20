@@ -74,6 +74,13 @@
     transform: rotateY(120deg);
     z-index: 1;
   }
+  /* different colour per card */
+  .book .page:nth-of-type(1) { background: linear-gradient(160deg, #ffe0ec, #ffc2d6); }
+  .book .page:nth-of-type(2) { background: linear-gradient(160deg, #fff0d9, #ffd9a8); }
+  .book .page:nth-of-type(3) { background: linear-gradient(160deg, #f0e2ff, #d8b4f8); }
+  .book .page:nth-of-type(4) { background: linear-gradient(160deg, #d9fff0, #aef0d3); }
+  .book .page:nth-of-type(5) { background: linear-gradient(160deg, #def0ff, #aed8ff); }
+  .book .page:nth-of-type(6) { background: linear-gradient(160deg, #fff7e0, #ffe6c2); }
 
   .page-num {
     font-size: 0.85rem;
@@ -187,6 +194,20 @@
   @keyframes burst {
     0% { opacity: 1; transform: translate(-50%,-50%) scale(.4); }
     100% { opacity: 0; transform: translate(var(--bx), var(--by)) scale(1.4); }
+  }
+
+  /* Pop message popup */
+  .pop-msg {
+    position: fixed; z-index: 6; pointer-events: none;
+    font-weight: 800; font-size: 1.1rem; white-space: nowrap;
+    color: #c2185b; text-shadow: 0 2px 6px rgba(255,255,255,.9);
+    transform: translate(-50%, -50%);
+    animation: popmsg 1s ease-out forwards;
+  }
+  @keyframes popmsg {
+    0% { opacity: 0; transform: translate(-50%,-50%) scale(.5); }
+    25% { opacity: 1; transform: translate(-50%,-90%) scale(1.1); }
+    100% { opacity: 0; transform: translate(-50%,-160%) scale(1); }
   }
 
   /* Twinkling sparkles layer */
@@ -566,6 +587,7 @@
       score++;
       scoreEl.textContent = `💖 ${score} / ${GOAL}`;
       burstAt(e.clientX, e.clientY);
+      popMessage(e.clientX, e.clientY);
       h.remove();
       spawnHeart();
       if (score >= GOAL) endGame(true);
@@ -635,6 +657,19 @@
       document.body.appendChild(b);
       setTimeout(() => b.remove(), 700);
     }
+  }
+
+  // Sweet message that pops up on every heart popped
+  const popWords = ['cutie 💕','adorable 🥰','my love 💗','beautiful ✨','gorgeous 😍',
+                    'sweetheart 💞','i love you 💘','angel 😇','my girl 🌸','perfect 💖'];
+  function popMessage(x, y) {
+    const m = document.createElement('div');
+    m.className = 'pop-msg';
+    m.textContent = popWords[Math.floor(Math.random()*popWords.length)];
+    m.style.left = x + 'px';
+    m.style.top = y + 'px';
+    document.body.appendChild(m);
+    setTimeout(() => m.remove(), 1000);
   }
 
   // Twinkling sparkles scattered in the background
