@@ -196,6 +196,25 @@
     100% { opacity: 0; transform: translate(var(--bx), var(--by)) scale(1.4); }
   }
 
+  /* Win banner */
+  .win-banner {
+    position: fixed; top: 50%; left: 50%; z-index: 10;
+    transform: translate(-50%,-50%);
+    background: linear-gradient(135deg, #ff7eaa, #d8b4f8);
+    color: #fff; font-weight: 900; font-size: 2rem;
+    padding: 26px 38px; border-radius: 24px; text-align: center;
+    box-shadow: 0 20px 50px rgba(194,24,91,0.45);
+    animation: winpop 1.7s cubic-bezier(.18,.89,.32,1.28) forwards;
+  }
+  .win-banner span { display: block; font-size: .95rem; font-weight: 600; margin-top: 8px; }
+  @keyframes winpop {
+    0% { opacity: 0; transform: translate(-50%,-50%) scale(.2) rotate(-12deg); }
+    18% { opacity: 1; transform: translate(-50%,-50%) scale(1.12) rotate(3deg); }
+    30% { transform: translate(-50%,-50%) scale(1) rotate(0); }
+    82% { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+    100% { opacity: 0; transform: translate(-50%,-50%) scale(.85); }
+  }
+
   /* Pop message popup */
   .pop-msg {
     position: fixed; z-index: 6; pointer-events: none;
@@ -563,7 +582,8 @@
     playfield.innerHTML = '';
     if (win) {
       challengeText.innerHTML = 'yesss you got them all! 💖';
-      setTimeout(reachFinale, 700);
+      showWin();
+      setTimeout(reachFinale, 1700);
     } else {
       challengeText.innerHTML = `so close! you popped ${score}. try again? 💓`;
       const again = document.createElement('button');
@@ -611,6 +631,17 @@
   }
 
   startBtn.addEventListener('click', startGame);
+
+  function showWin() {
+    const w = document.createElement('div');
+    w.className = 'win-banner';
+    w.innerHTML = '🎉 YOU WIN! 🎉<span>you popped them all, superstar 💖</span>';
+    document.body.appendChild(w);
+    confetti(150);
+    let n = 0;
+    const t = setInterval(() => { for (let i=0;i<6;i++) spawnHeart(); if (++n>6) clearInterval(t); }, 200);
+    setTimeout(() => w.remove(), 1700);
+  }
 
   const emojis = ['💖','💕','💗','🌸','✨','💞','🩷','🌷','💐','🦋'];
   const colors = ['#ff7eaa','#d8b4f8','#ffd6e0','#ffcf5c','#ff9eb5','#b4f8d8'];
