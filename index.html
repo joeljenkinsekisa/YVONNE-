@@ -248,6 +248,22 @@
     margin-bottom: 4px;
   }
   .gift { font-size: 4rem; animation: bob 3s ease-in-out infinite; }
+
+  /* Cartoon heart buddy */
+  .buddy { animation: bob 2.6s ease-in-out infinite; transform-origin: center; }
+  .buddy .body { animation: squish 2.6s ease-in-out infinite; transform-origin: 60px 105px; }
+  @keyframes squish { 0%,100%{transform:scaleY(1) scaleX(1)} 50%{transform:scaleY(.94) scaleX(1.05)} }
+  .buddy .eyes { animation: blink 4s infinite; transform-origin: center 56px; }
+  @keyframes blink { 0%,92%,100%{transform:scaleY(1)} 96%{transform:scaleY(.1)} }
+  .buddy .arm-right { animation: wave 1.1s ease-in-out infinite; transform-origin: 90px 74px; }
+  @keyframes wave { 0%,100%{transform:rotate(0deg)} 50%{transform:rotate(-35deg)} }
+  .buddy .arm-left { animation: wave2 1.1s ease-in-out infinite; transform-origin: 30px 74px; }
+  @keyframes wave2 { 0%,100%{transform:rotate(0deg)} 50%{transform:rotate(12deg)} }
+  .buddy-row { display: flex; gap: 10px; justify-content: center; }
+  .buddy.small { width: 56px; height: 56px; }
+  .hop { animation: hop 1.2s ease-in-out infinite; }
+  .hop2 { animation: hop 1.2s ease-in-out .6s infinite; }
+  @keyframes hop { 0%,100%{transform:translateY(0)} 40%{transform:translateY(-12px)} }
   .orbit {
     position: absolute; font-size: 1.5rem;
     top: 50%; left: 50%;
@@ -308,7 +324,29 @@
         <span class="orbit o2">✨</span>
         <span class="orbit o3">🌸</span>
         <span class="orbit o4">💗</span>
-        <div class="gift">🎁</div>
+        <div class="buddy">
+          <svg viewBox="0 0 120 120" width="100" height="100" aria-label="cute heart character">
+            <!-- waving arm -->
+            <g class="arm-left"><ellipse cx="22" cy="74" rx="9" ry="6" fill="#ff7eaa"/></g>
+            <g class="arm-right"><ellipse cx="98" cy="74" rx="9" ry="6" fill="#ff7eaa"/></g>
+            <!-- heart body -->
+            <path class="body" d="M60 105 C20 78 18 44 38 36 C50 31 58 40 60 48 C62 40 70 31 82 36 C102 44 100 78 60 105 Z" fill="#ff5e8a"/>
+            <!-- cheeks -->
+            <circle cx="44" cy="66" r="6" fill="#ffb3c8"/>
+            <circle cx="76" cy="66" r="6" fill="#ffb3c8"/>
+            <!-- eyes -->
+            <g class="eyes">
+              <ellipse cx="50" cy="56" rx="6" ry="7" fill="#fff"/>
+              <ellipse cx="70" cy="56" rx="6" ry="7" fill="#fff"/>
+              <circle cx="51" cy="57" r="3" fill="#3a2230"/>
+              <circle cx="71" cy="57" r="3" fill="#3a2230"/>
+              <circle cx="52.5" cy="55.5" r="1" fill="#fff"/>
+              <circle cx="72.5" cy="55.5" r="1" fill="#fff"/>
+            </g>
+            <!-- smile -->
+            <path d="M52 70 Q60 78 68 70" stroke="#3a2230" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
       </div>
       <p class="kicker">a little something for</p>
       <h1 class="shine">Yvonne</h1>
@@ -378,6 +416,34 @@
         </div>
         <p class="name">Yvonne Mwikali</p>
         <p class="final-msg">you're cuter than i could ever put into words, and you deserve all the goodness, love and happiness in the world 💖</p>
+        <div class="buddy-row">
+          <div class="buddy small hop">
+            <svg viewBox="0 0 120 120" width="56" height="56">
+              <g class="arm-left"><ellipse cx="22" cy="74" rx="9" ry="6" fill="#ff7eaa"/></g>
+              <g class="arm-right"><ellipse cx="98" cy="74" rx="9" ry="6" fill="#ff7eaa"/></g>
+              <path class="body" d="M60 105 C20 78 18 44 38 36 C50 31 58 40 60 48 C62 40 70 31 82 36 C102 44 100 78 60 105 Z" fill="#ff5e8a"/>
+              <circle cx="44" cy="66" r="6" fill="#ffb3c8"/><circle cx="76" cy="66" r="6" fill="#ffb3c8"/>
+              <g class="eyes">
+                <ellipse cx="50" cy="56" rx="6" ry="7" fill="#fff"/><ellipse cx="70" cy="56" rx="6" ry="7" fill="#fff"/>
+                <circle cx="51" cy="57" r="3" fill="#3a2230"/><circle cx="71" cy="57" r="3" fill="#3a2230"/>
+              </g>
+              <path d="M52 70 Q60 78 68 70" stroke="#3a2230" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="buddy small hop2">
+            <svg viewBox="0 0 120 120" width="56" height="56">
+              <g class="arm-left"><ellipse cx="22" cy="74" rx="9" ry="6" fill="#caa3f5"/></g>
+              <g class="arm-right"><ellipse cx="98" cy="74" rx="9" ry="6" fill="#caa3f5"/></g>
+              <path class="body" d="M60 105 C20 78 18 44 38 36 C50 31 58 40 60 48 C62 40 70 31 82 36 C102 44 100 78 60 105 Z" fill="#d8b4f8"/>
+              <circle cx="44" cy="66" r="6" fill="#efe0ff"/><circle cx="76" cy="66" r="6" fill="#efe0ff"/>
+              <g class="eyes">
+                <ellipse cx="50" cy="56" rx="6" ry="7" fill="#fff"/><ellipse cx="70" cy="56" rx="6" ry="7" fill="#fff"/>
+                <circle cx="51" cy="57" r="3" fill="#3a2230"/><circle cx="71" cy="57" r="3" fill="#3a2230"/>
+              </g>
+              <path d="M52 70 Q60 78 68 70" stroke="#3a2230" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
         <p class="signature">yours, always 💕</p>
       </div>
     </div>
