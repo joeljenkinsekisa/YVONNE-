@@ -110,16 +110,28 @@
   .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(216,110,248,0.55); }
   .btn:active { transform: scale(0.96); }
 
-  .heart-tap {
-    font-size: 3.4rem;
-    background: none; border: none; cursor: pointer;
-    line-height: 1; user-select: none;
-    transition: transform 0.12s ease, left 0.25s ease, top 0.25s ease;
-    filter: drop-shadow(0 6px 10px rgba(194,24,91,0.3));
-    position: relative;
+  .scorebar {
+    display: flex; justify-content: space-between; width: 100%;
+    max-width: 280px; font-weight: 700; color: var(--deep); font-size: 0.95rem;
   }
-  .heart-tap:active { transform: scale(0.7); }
-  .count { font-size: 1rem; font-weight: 700; color: var(--deep); }
+  .playfield {
+    position: relative;
+    width: 100%; max-width: 300px; height: 220px;
+    border-radius: 18px;
+    background: rgba(255,255,255,0.45);
+    border: 2px dashed var(--soft-pink);
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .pop-heart {
+    position: absolute; font-size: 2.2rem;
+    cursor: pointer; user-select: none;
+    animation: popin 0.18s ease, wobble 1.2s ease-in-out infinite;
+    filter: drop-shadow(0 4px 6px rgba(194,24,91,0.3));
+  }
+  .pop-heart:active { transform: scale(0.6); }
+  @keyframes popin { from { transform: scale(0); } to { transform: scale(1); } }
+  @keyframes wobble { 0%,100%{transform:rotate(-8deg)} 50%{transform:rotate(8deg)} }
 
   .dots { display: flex; gap: 8px; justify-content: center; margin-top: 18px; }
   .dot {
@@ -187,10 +199,59 @@
     background: rgba(255,255,255,0.72);
     backdrop-filter: blur(10px);
     border-radius: 28px;
-    padding: 48px 28px;
+    padding: 44px 28px 40px;
     text-align: center;
     box-shadow: 0 20px 50px rgba(194,24,91,0.18);
-    display: flex; flex-direction: column; align-items: center; gap: 16px;
+    display: flex; flex-direction: column; align-items: center; gap: 14px;
+  }
+  .cover { position: relative; overflow: hidden; }
+  .cover::before {
+    content: ""; position: absolute; inset: -2px;
+    border-radius: 30px; padding: 3px;
+    background: linear-gradient(135deg, #ff7eaa, #d8b4f8, #ffcf5c, #ff7eaa);
+    background-size: 300% 300%;
+    animation: drift 8s ease infinite;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
+    pointer-events: none;
+  }
+  .cover-ring {
+    position: relative;
+    width: 150px; height: 150px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 4px;
+  }
+  .gift { font-size: 4rem; animation: bob 3s ease-in-out infinite; }
+  .orbit {
+    position: absolute; font-size: 1.5rem;
+    top: 50%; left: 50%;
+    animation: spin 9s linear infinite;
+    transform-origin: -0px -0px;
+  }
+  .o1 { animation-delay: 0s; }
+  .o2 { animation-delay: -2.25s; }
+  .o3 { animation-delay: -4.5s; }
+  .o4 { animation-delay: -6.75s; }
+  @keyframes spin {
+    from { transform: rotate(0deg) translateX(72px) rotate(0deg); }
+    to   { transform: rotate(360deg) translateX(72px) rotate(-360deg); }
+  }
+  .kicker { font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; color: #b76e8a; }
+  .shine {
+    font-size: 2.6rem; font-weight: 800;
+    background: linear-gradient(90deg, #c2185b, #d8b4f8, #ff7eaa, #c2185b);
+    background-size: 300% 100%;
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 4s linear infinite;
+  }
+  @keyframes shine { to { background-position: 300% 0; } }
+  .hint { font-size: 0.85rem; color: #9c5570; animation: fade 1.8s ease-in-out infinite; }
+  @keyframes fade { 0%,100%{opacity:.4} 50%{opacity:1} }
+  .pulse { animation: pulse 1.8s ease-in-out infinite; }
+  @keyframes pulse {
+    0%,100% { transform: scale(1); box-shadow: 0 8px 20px rgba(216,110,248,0.4); }
+    50% { transform: scale(1.06); box-shadow: 0 12px 30px rgba(216,110,248,0.7); }
   }
 
   .music-toggle {
@@ -213,13 +274,21 @@
 <body>
   <button class="music-toggle" id="musicBtn" title="Play / pause music">🎵</button>
 
-  <!-- Intro poster -->
+  <!-- Intro poster (cover) -->
   <div class="poster" id="poster">
-    <div class="poster-card">
-      <div class="emoji-big">🎁</div>
-      <h1>Twaana, wanna see a surprise?</h1>
-      <p class="msg">i made you a little something. tap to open it 💕</p>
-      <button class="btn" id="openBtn">Yes, show me ✨</button>
+    <div class="poster-card cover">
+      <div class="cover-ring">
+        <span class="orbit o1">💕</span>
+        <span class="orbit o2">✨</span>
+        <span class="orbit o3">🌸</span>
+        <span class="orbit o4">💗</span>
+        <div class="gift">🎁</div>
+      </div>
+      <p class="kicker">a little something for</p>
+      <h1 class="shine">Yvonne</h1>
+      <p class="msg">i made you something sweet for today.<br>wanna see your surprise? 💕</p>
+      <button class="btn pulse" id="openBtn">open it ✨</button>
+      <p class="hint">tap to begin 👆</p>
     </div>
   </div>
 
@@ -264,11 +333,15 @@
       <!-- Page 5: Challenge -->
       <div class="page">
         <span class="page-num">Page 5 of 5</span>
-        <div class="emoji-big">🎮</div>
-        <h1>quick challenge</h1>
-        <p class="msg" id="challengeText">catch <b>5</b> hearts to unlock your surprise. tap the heart, quick! 💓</p>
-        <button class="heart-tap" id="heartTap" aria-label="catch the heart">❤️</button>
-        <p class="count" id="count">0 / 5</p>
+        <h1>catch the hearts 💓</h1>
+        <p class="msg" id="challengeText">pop <b>8</b> hearts before time runs out to unlock your surprise!</p>
+        <div class="scorebar">
+          <span id="score">💖 0 / 8</span>
+          <span id="timer">⏱️ 15s</span>
+        </div>
+        <div class="playfield" id="playfield">
+          <button class="btn start" id="startBtn">start 🎯</button>
+        </div>
       </div>
 
       <!-- Finale -->
@@ -318,12 +391,16 @@
   document.querySelectorAll('[data-next]').forEach(b =>
     b.addEventListener('click', () => go(idx + 1)));
 
-  // Challenge: catch 5 hearts
-  const GOAL = 5;
-  let caught = 0;
-  const heartTap = document.getElementById('heartTap');
-  const countEl = document.getElementById('count');
+  // Challenge: pop 8 hearts before time runs out
+  const GOAL = 8;
+  const TIME = 15;
+  const hearts = ['💖','💕','💗','🩷','💞','🌸'];
+  const playfield = document.getElementById('playfield');
+  const scoreEl = document.getElementById('score');
+  const timerEl = document.getElementById('timer');
   const challengeText = document.getElementById('challengeText');
+  const startBtn = document.getElementById('startBtn');
+  let score = 0, timeLeft = TIME, spawnT = null, tickT = null, running = false;
 
   function reachFinale() {
     go(pages.length - 1);
@@ -335,22 +412,58 @@
     }, 300);
   }
 
-  heartTap.addEventListener('click', () => {
-    if (caught >= GOAL) return;
-    caught++;
-    countEl.textContent = caught + ' / ' + GOAL;
-    spawnHeart(); spawnHeart();
-    // skitter the heart to a new spot to make it a fun catch
-    if (caught < GOAL) {
-      heartTap.style.left = (Math.random() * 120 - 60) + 'px';
-      heartTap.style.top = (Math.random() * 40 - 20) + 'px';
-    } else {
-      challengeText.innerHTML = 'you caught them all! 💖';
-      heartTap.style.left = '0px';
-      heartTap.style.top = '0px';
+  function endGame(win) {
+    running = false;
+    clearInterval(spawnT); clearInterval(tickT);
+    playfield.innerHTML = '';
+    if (win) {
+      challengeText.innerHTML = 'yesss you got them all! 💖';
       setTimeout(reachFinale, 700);
+    } else {
+      challengeText.innerHTML = `so close! you popped ${score}. try again? 💓`;
+      const again = document.createElement('button');
+      again.className = 'btn'; again.textContent = 'try again 🔁';
+      again.addEventListener('click', startGame);
+      playfield.appendChild(again);
     }
-  });
+  }
+
+  function popHeart() {
+    if (!running) return;
+    const h = document.createElement('div');
+    h.className = 'pop-heart';
+    h.textContent = hearts[Math.floor(Math.random()*hearts.length)];
+    const x = Math.random() * 80 + 5;   // % within field
+    const y = Math.random() * 75 + 5;
+    h.style.left = x + '%';
+    h.style.top = y + '%';
+    h.addEventListener('click', () => {
+      if (!running) return;
+      score++;
+      scoreEl.textContent = `💖 ${score} / ${GOAL}`;
+      h.remove();
+      spawnHeart();
+      if (score >= GOAL) endGame(true);
+    });
+    playfield.appendChild(h);
+    setTimeout(() => h.remove(), 1100); // heart escapes if not tapped
+  }
+
+  function startGame() {
+    score = 0; timeLeft = TIME; running = true;
+    scoreEl.textContent = `💖 0 / ${GOAL}`;
+    timerEl.textContent = `⏱️ ${TIME}s`;
+    challengeText.innerHTML = `pop <b>${GOAL}</b> hearts before time runs out!`;
+    playfield.innerHTML = '';
+    spawnT = setInterval(popHeart, 650);
+    tickT = setInterval(() => {
+      timeLeft--;
+      timerEl.textContent = `⏱️ ${timeLeft}s`;
+      if (timeLeft <= 0) endGame(score >= GOAL);
+    }, 1000);
+  }
+
+  startBtn.addEventListener('click', startGame);
 
   const emojis = ['💖','💕','💗','🌸','✨','💞','🩷','🌷','💐','🦋'];
   const colors = ['#ff7eaa','#d8b4f8','#ffd6e0','#ffcf5c','#ff9eb5','#b4f8d8'];
