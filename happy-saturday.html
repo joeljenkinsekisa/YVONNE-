@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Happy Saturday, Yvonne Mwikali 💕</title>
+<title>Happy Sunday, Yvonne Mwikali 💕</title>
 <style>
   :root {
     --pink: #ff7eaa;
@@ -109,6 +109,17 @@
   }
   .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(216,110,248,0.55); }
   .btn:active { transform: scale(0.96); }
+
+  .heart-tap {
+    font-size: 3.4rem;
+    background: none; border: none; cursor: pointer;
+    line-height: 1; user-select: none;
+    transition: transform 0.12s ease, left 0.25s ease, top 0.25s ease;
+    filter: drop-shadow(0 6px 10px rgba(194,24,91,0.3));
+    position: relative;
+  }
+  .heart-tap:active { transform: scale(0.7); }
+  .count { font-size: 1rem; font-weight: 700; color: var(--deep); }
 
   .dots { display: flex; gap: 8px; justify-content: center; margin-top: 18px; }
   .dot {
@@ -217,9 +228,9 @@
       <!-- Page 1 -->
       <div class="page active">
         <span class="page-num">Page 1 of 5</span>
-        <div class="emoji-big">🌸</div>
-        <h1>hey you</h1>
-        <p class="msg">it's saturday and you were the first thing on my mind. so i made you this little something 💗</p>
+        <div class="emoji-big">☀️</div>
+        <h1>happy sunday, you</h1>
+        <p class="msg">slow morning, lazy vibes, and you on my mind. perfect way to start the day honestly 💗</p>
         <button class="btn" data-next>next 💌</button>
       </div>
 
@@ -246,17 +257,18 @@
         <span class="page-num">Page 4 of 5</span>
         <div class="emoji-big">💞</div>
         <h1>you deserve it all</h1>
-        <p class="msg">all the good stuff, all the love, all the happy days. every bit of it, for you 🌟</p>
+        <p class="msg">all the good stuff, all the love, all the lazy sunday cuddles. every bit of it, for you 🌟</p>
         <button class="btn" data-next>next 💐</button>
       </div>
 
-      <!-- Page 5 -->
+      <!-- Page 5: Challenge -->
       <div class="page">
         <span class="page-num">Page 5 of 5</span>
-        <div class="emoji-big">💖</div>
-        <h1>okay, last one</h1>
-        <p class="msg">saved my favourite part for the end. ready?</p>
-        <button class="btn" data-finale>Show me ✨</button>
+        <div class="emoji-big">🎮</div>
+        <h1>quick challenge</h1>
+        <p class="msg" id="challengeText">catch <b>5</b> hearts to unlock your surprise. tap the heart, quick! 💓</p>
+        <button class="heart-tap" id="heartTap" aria-label="catch the heart">❤️</button>
+        <p class="count" id="count">0 / 5</p>
       </div>
 
       <!-- Finale -->
@@ -306,7 +318,14 @@
   document.querySelectorAll('[data-next]').forEach(b =>
     b.addEventListener('click', () => go(idx + 1)));
 
-  document.querySelector('[data-finale]').addEventListener('click', () => {
+  // Challenge: catch 5 hearts
+  const GOAL = 5;
+  let caught = 0;
+  const heartTap = document.getElementById('heartTap');
+  const countEl = document.getElementById('count');
+  const challengeText = document.getElementById('challengeText');
+
+  function reachFinale() {
     go(pages.length - 1);
     confetti(120);
     let n = 0;
@@ -314,6 +333,23 @@
       for (let i = 0; i < 5; i++) spawnHeart();
       if (++n > 14) clearInterval(t);
     }, 300);
+  }
+
+  heartTap.addEventListener('click', () => {
+    if (caught >= GOAL) return;
+    caught++;
+    countEl.textContent = caught + ' / ' + GOAL;
+    spawnHeart(); spawnHeart();
+    // skitter the heart to a new spot to make it a fun catch
+    if (caught < GOAL) {
+      heartTap.style.left = (Math.random() * 120 - 60) + 'px';
+      heartTap.style.top = (Math.random() * 40 - 20) + 'px';
+    } else {
+      challengeText.innerHTML = 'you caught them all! 💖';
+      heartTap.style.left = '0px';
+      heartTap.style.top = '0px';
+      setTimeout(reachFinale, 700);
+    }
   });
 
   const emojis = ['💖','💕','💗','🌸','✨','💞','🩷','🌷','💐','🦋'];
