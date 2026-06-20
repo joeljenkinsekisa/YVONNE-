@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Happy Saturday, Yvonne Mwikali 💕</title>
+<style>
+  :root {
+    --pink: #ff7eaa;
+    --soft-pink: #ffd6e0;
+    --lavender: #d8b4f8;
+    --cream: #fff5f8;
+    --deep: #c2185b;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+
+  body {
+    font-family: "Segoe UI", "Trebuchet MS", system-ui, sans-serif;
+    background: linear-gradient(135deg, #ffe3ec 0%, #ffd6e0 35%, #f3e0ff 100%);
+    background-size: 200% 200%;
+    animation: drift 18s ease infinite;
+    color: #5a2a3d;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    overflow-x: hidden;
+  }
+  @keyframes drift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .card {
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(10px);
+    border-radius: 28px;
+    padding: 34px 26px 42px;
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(194, 24, 91, 0.18);
+    position: relative;
+    z-index: 2;
+    animation: rise 1s ease both;
+  }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  h1 {
+    font-size: 1.85rem;
+    color: var(--deep);
+    line-height: 1.3;
+    margin-bottom: 4px;
+  }
+  .subtitle {
+    font-size: 0.95rem;
+    color: #9c5570;
+    margin-bottom: 8px;
+    min-height: 1.4em;
+  }
+  .typed::after {
+    content: "|";
+    animation: blink 1s steps(1) infinite;
+    color: var(--pink);
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .photo-wrap {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 14px;
+    border-radius: 50%;
+    padding: 5px;
+    background: linear-gradient(135deg, #ff7eaa, #d8b4f8);
+    box-shadow: 0 10px 28px rgba(194,24,91,0.3);
+    animation: floaty 4s ease-in-out infinite;
+  }
+  @keyframes floaty {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  .photo-wrap img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #fff;
+    display: block;
+  }
+  .name {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--deep);
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+  }
+
+  .sparkle { display: inline-block; animation: twinkle 2s infinite ease-in-out; }
+  @keyframes twinkle {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.25); opacity: 0.7; }
+  }
+
+  .message {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    margin: 16px 0 24px;
+    color: #7a3a52;
+  }
+
+  .challenge {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--deep);
+    margin-bottom: 12px;
+  }
+
+  .heart-btn {
+    font-size: 4rem;
+    cursor: pointer;
+    background: none;
+    border: none;
+    line-height: 1;
+    user-select: none;
+    transition: transform 0.15s ease;
+    animation: beat 1.4s infinite ease-in-out;
+    filter: drop-shadow(0 6px 10px rgba(194, 24, 91, 0.3));
+  }
+  .heart-btn:hover { transform: scale(1.1); }
+  .heart-btn:active { transform: scale(0.85); }
+  @keyframes beat {
+    0%, 100% { transform: scale(1); }
+    25% { transform: scale(1.12); }
+    50% { transform: scale(1); }
+    75% { transform: scale(1.12); }
+  }
+
+  .counter { margin-top: 10px; font-size: 0.95rem; color: #9c5570; }
+
+  .progress { display: flex; gap: 8px; justify-content: center; margin-top: 10px; }
+  .dot {
+    width: 16px; height: 16px; border-radius: 50%;
+    background: rgba(255,255,255,0.7);
+    border: 2px solid var(--pink);
+    transition: all 0.3s ease;
+  }
+  .dot.filled { background: var(--pink); transform: scale(1.25); }
+
+  /* Reasons / love meter card */
+  .reasons {
+    display: none;
+    margin-top: 22px;
+  }
+  .reasons.show { display: block; animation: pop 0.7s cubic-bezier(0.18,0.89,0.32,1.28) both; }
+  .reason-text {
+    font-size: 1.1rem;
+    color: var(--deep);
+    font-weight: 600;
+    min-height: 3.2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 6px;
+    transition: opacity 0.4s ease;
+  }
+  .meter-label { font-size: 0.9rem; color: #9c5570; margin-top: 14px; }
+  .meter {
+    height: 18px;
+    background: rgba(255,255,255,0.7);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-top: 6px;
+    border: 2px solid var(--soft-pink);
+  }
+  .meter-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 20px;
+    background: linear-gradient(90deg, #ff9eb5, #d8b4f8);
+    transition: width 1.6s cubic-bezier(0.22,1,0.36,1);
+  }
+
+  .btn {
+    margin-top: 18px;
+    padding: 12px 26px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, #ff7eaa, #d8b4f8);
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(216,110,248,0.4);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(216,110,248,0.55); }
+  .btn:active { transform: scale(0.96); }
+
+  /* Final reveal */
+  .final {
+    display: none;
+    margin-top: 24px;
+    padding: 24px 18px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #fff0f6, #f8e6ff);
+    color: var(--deep);
+    font-size: 1.18rem;
+    line-height: 1.7;
+    font-weight: 600;
+  }
+  .final.show {
+    display: block;
+    animation: pop 0.9s cubic-bezier(0.18,0.89,0.32,1.28) both, glow 2.5s infinite alternate ease-in-out;
+  }
+  @keyframes pop {
+    0% { opacity: 0; transform: scale(0.4) rotate(-6deg); }
+    100% { opacity: 1; transform: scale(1) rotate(0); }
+  }
+  @keyframes glow {
+    from { box-shadow: 0 0 12px rgba(255,105,160,0.5); }
+    to { box-shadow: 0 0 42px rgba(216,110,248,0.85); }
+  }
+  .signature { margin-top: 14px; font-size: 0.95rem; color: #9c5570; font-style: italic; }
+
+  /* Floating + confetti */
+  .floating {
+    position: fixed; bottom: -40px; font-size: 1.6rem;
+    pointer-events: none; z-index: 1;
+    animation: float-up linear forwards; opacity: 0.85;
+  }
+  @keyframes float-up {
+    0% { transform: translateY(0) rotate(0); opacity: 0.9; }
+    100% { transform: translateY(-115vh) rotate(360deg); opacity: 0; }
+  }
+  .confetti {
+    position: fixed; top: -20px; width: 10px; height: 14px;
+    pointer-events: none; z-index: 1; border-radius: 2px;
+    animation: fall linear forwards;
+  }
+  @keyframes fall {
+    0% { transform: translateY(0) rotate(0); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* Music toggle */
+  .music-toggle {
+    position: fixed; top: 14px; right: 14px; z-index: 5;
+    background: rgba(255,255,255,0.8);
+    border: none; border-radius: 50%;
+    width: 46px; height: 46px; font-size: 1.3rem;
+    cursor: pointer; box-shadow: 0 4px 12px rgba(194,24,91,0.25);
+    transition: transform 0.2s ease;
+  }
+  .music-toggle:hover { transform: scale(1.1) rotate(8deg); }
+
+  @media (max-width: 420px) {
+    h1 { font-size: 1.5rem; }
+    .heart-btn { font-size: 3.2rem; }
+    .card { padding: 28px 18px 36px; }
+    .final { font-size: 1.05rem; }
+  }
+</style>
+</head>
+<body>
+  <button class="music-toggle" id="musicBtn" title="Play / pause music">🎵</button>
+
+  <div class="card">
+    <div class="photo-wrap">
+      <img src="yvonne.jpg" alt="Yvonne Mwikali"
+           onerror="this.style.display='none'; this.parentElement.innerHTML='💖';" />
+    </div>
+    <p class="name">Yvonne Mwikali</p>
+    <h1><span class="sparkle">🌸</span> Happy Saturday, my love <span class="sparkle">🌸</span></h1>
+    <p class="subtitle"><span class="typed" id="typed"></span></p>
+
+    <p class="message">
+      Good morning, beautiful Yvonne. You are so special, so adorable, and so deeply loved.
+      May today wrap you in sunshine and softness — because you truly deserve all the
+      goodness, warmth, and love in the world. 💗
+    </p>
+
+    <div id="game">
+      <p class="challenge">Tap the heart 5 times to unlock your surprise 👇</p>
+      <button class="heart-btn" id="heart" aria-label="heart">❤️</button>
+      <p class="counter" id="counter">0 / 5</p>
+      <div class="progress" id="progress">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <span class="dot"></span><span class="dot"></span>
+      </div>
+    </div>
+
+    <!-- Stage 2: reasons + love meter -->
+    <div class="reasons" id="reasons">
+      <p class="challenge">A few little reasons why you're amazing 💝</p>
+      <div class="reason-text" id="reasonText">Loading reasons...</div>
+      <p class="meter-label">My love for you:</p>
+      <div class="meter"><div class="meter-fill" id="meterFill"></div></div>
+      <button class="btn" id="revealBtn">One more surprise 💌</button>
+    </div>
+
+    <!-- Stage 3: final glowing message -->
+    <div class="final" id="final">
+      ✨💖✨<br />
+      Yvonne, you are more adorable than words can describe, and you deserve all the
+      goodness, love, and happiness in the world. ✨💖✨
+      <div class="signature">Forever yours, Yvonne 💕</div>
+    </div>
+  </div>
+
+<script>
+  const heart = document.getElementById('heart');
+  const counterEl = document.getElementById('counter');
+  const finalEl = document.getElementById('final');
+  const gameEl = document.getElementById('game');
+  const reasonsEl = document.getElementById('reasons');
+  const reasonTextEl = document.getElementById('reasonText');
+  const meterFill = document.getElementById('meterFill');
+  const revealBtn = document.getElementById('revealBtn');
+  const dots = document.querySelectorAll('#progress .dot');
+  const GOAL = 5;
+  let count = 0;
+
+  const emojis = ['💖','💕','💗','🌸','✨','💞','🩷','🌷','💐','🦋'];
+  const colors = ['#ff7eaa','#d8b4f8','#ffd6e0','#ffcf5c','#ff9eb5','#b4f8d8'];
+
+  /* Typewriter subtitle */
+  const lines = [
+    "Made with love, just for you, Yvonne ✨",
+    "Yes — this whole page is about you 💗",
+    "Keep reading, cutie... 🌸"
+  ];
+  const typedEl = document.getElementById('typed');
+  let li = 0, ci = 0, deleting = false;
+  function typeLoop() {
+    const line = lines[li];
+    typedEl.textContent = line.slice(0, ci);
+    if (!deleting && ci < line.length) { ci++; setTimeout(typeLoop, 55); }
+    else if (!deleting && ci === line.length) { deleting = true; setTimeout(typeLoop, 1800); }
+    else if (deleting && ci > 0) { ci--; setTimeout(typeLoop, 28); }
+    else { deleting = false; li = (li + 1) % lines.length; setTimeout(typeLoop, 350); }
+  }
+  typeLoop();
+
+  /* Floating hearts */
+  function spawnHeart() {
+    const h = document.createElement('div');
+    h.className = 'floating';
+    h.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    h.style.left = Math.random() * 100 + 'vw';
+    h.style.fontSize = (1.2 + Math.random() * 1.8) + 'rem';
+    const dur = 4 + Math.random() * 4;
+    h.style.animationDuration = dur + 's';
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), dur * 1000);
+  }
+
+  /* Confetti burst */
+  function confetti(n = 60) {
+    for (let i = 0; i < n; i++) {
+      const c = document.createElement('div');
+      c.className = 'confetti';
+      c.style.left = Math.random() * 100 + 'vw';
+      c.style.background = colors[Math.floor(Math.random() * colors.length)];
+      const dur = 2.5 + Math.random() * 2;
+      c.style.animationDuration = dur + 's';
+      c.style.transform = `rotate(${Math.random()*360}deg)`;
+      if (Math.random() > 0.5) c.style.borderRadius = '50%';
+      document.body.appendChild(c);
+      setTimeout(() => c.remove(), dur * 1000);
+    }
+  }
+
+  /* Gentle ambient hearts */
+  setInterval(spawnHeart, 1400);
+
+  /* Stage 1: heart challenge */
+  heart.addEventListener('click', () => {
+    if (count >= GOAL) return;
+    count++;
+    counterEl.textContent = count + ' / ' + GOAL;
+    if (dots[count - 1]) dots[count - 1].classList.add('filled');
+    spawnHeart(); spawnHeart();
+    if (count === GOAL) showReasons();
+  });
+
+  /* Stage 2: reasons carousel + meter */
+  const reasons = [
+    "You light up every room you walk into 🌟",
+    "Your smile is my favorite thing in the world 😊",
+    "You're kind, clever, and impossibly cute 💕",
+    "Just thinking about you makes my day better ☀️",
+    "You make ordinary moments feel magical ✨"
+  ];
+  let ri = 0;
+  function showReasons() {
+    gameEl.style.display = 'none';
+    reasonsEl.classList.add('show');
+    confetti(50);
+    reasonTextEl.textContent = reasons[0];
+    requestAnimationFrame(() => meterFill.style.width = '100%');
+    setInterval(() => {
+      ri = (ri + 1) % reasons.length;
+      reasonTextEl.style.opacity = 0;
+      setTimeout(() => {
+        reasonTextEl.textContent = reasons[ri];
+        reasonTextEl.style.opacity = 1;
+      }, 350);
+    }, 3000);
+  }
+
+  /* Stage 3: final reveal */
+  revealBtn.addEventListener('click', () => {
+    reasonsEl.classList.remove('show');
+    reasonsEl.style.display = 'none';
+    finalEl.classList.add('show');
+    confetti(120);
+    let bursts = 0;
+    const interval = setInterval(() => {
+      for (let i = 0; i < 5; i++) spawnHeart();
+      if (++bursts > 14) clearInterval(interval);
+    }, 320);
+  });
+
+  /* Soft background music via Web Audio (gentle arpeggio, no files needed) */
+  const musicBtn = document.getElementById('musicBtn');
+  let audioCtx = null, musicTimer = null, playing = false;
+  const melody = [523.25, 659.25, 783.99, 659.25, 587.33, 698.46, 880.0, 698.46];
+  let mi = 0;
+  function playNote(freq) {
+    const o = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    o.type = 'sine';
+    o.frequency.value = freq;
+    g.gain.setValueAtTime(0, audioCtx.currentTime);
+    g.gain.linearRampToValueAtTime(0.12, audioCtx.currentTime + 0.05);
+    g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.9);
+    o.connect(g); g.connect(audioCtx.destination);
+    o.start(); o.stop(audioCtx.currentTime + 0.95);
+  }
+  musicBtn.addEventListener('click', () => {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (playing) {
+      clearInterval(musicTimer); playing = false; musicBtn.textContent = '🎵';
+    } else {
+      playing = true; musicBtn.textContent = '🔇';
+      playNote(melody[mi]); mi = (mi + 1) % melody.length;
+      musicTimer = setInterval(() => {
+        playNote(melody[mi]); mi = (mi + 1) % melody.length;
+      }, 600);
+    }
+  });
+</script>
+</body>
+</html>
