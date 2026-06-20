@@ -264,6 +264,21 @@
   .hop { animation: hop 1.2s ease-in-out infinite; }
   .hop2 { animation: hop 1.2s ease-in-out .6s infinite; }
   @keyframes hop { 0%,100%{transform:translateY(0)} 40%{transform:translateY(-12px)} }
+
+  /* Strolling buddy across the bottom */
+  .walker {
+    position: fixed; bottom: 8px; left: 0; z-index: 4;
+    pointer-events: none;
+    animation: stroll 16s linear infinite;
+  }
+  @keyframes stroll {
+    0%   { transform: translateX(-90px) scaleX(1); }
+    48%  { transform: translateX(100vw) scaleX(1); }
+    50%  { transform: translateX(100vw) scaleX(-1); }
+    98%  { transform: translateX(-90px) scaleX(-1); }
+    100% { transform: translateX(-90px) scaleX(1); }
+  }
+  .walk { animation: hop 0.5s ease-in-out infinite; }
   .orbit {
     position: absolute; font-size: 1.5rem;
     top: 50%; left: 50%;
@@ -315,6 +330,23 @@
 </head>
 <body>
   <button class="music-toggle" id="musicBtn" title="Play / pause music">🎵</button>
+
+  <!-- Cartoon buddy strolling across the bottom -->
+  <div class="walker" id="walker">
+    <div class="buddy small walk">
+      <svg viewBox="0 0 120 120" width="64" height="64">
+        <g class="arm-left"><ellipse cx="22" cy="74" rx="9" ry="6" fill="#ff7eaa"/></g>
+        <g class="arm-right"><ellipse cx="98" cy="74" rx="9" ry="6" fill="#ff7eaa"/></g>
+        <path class="body" d="M60 105 C20 78 18 44 38 36 C50 31 58 40 60 48 C62 40 70 31 82 36 C102 44 100 78 60 105 Z" fill="#ff5e8a"/>
+        <circle cx="44" cy="66" r="6" fill="#ffb3c8"/><circle cx="76" cy="66" r="6" fill="#ffb3c8"/>
+        <g class="eyes">
+          <ellipse cx="50" cy="56" rx="6" ry="7" fill="#fff"/><ellipse cx="70" cy="56" rx="6" ry="7" fill="#fff"/>
+          <circle cx="51" cy="57" r="3" fill="#3a2230"/><circle cx="71" cy="57" r="3" fill="#3a2230"/>
+        </g>
+        <path d="M52 70 Q60 78 68 70" stroke="#3a2230" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
 
   <!-- Intro poster (cover) -->
   <div class="poster" id="poster">
